@@ -6,6 +6,7 @@
         <li>{{$dancer->id}}</li>
         <li>{{$dancer->name1}}</li>
         <li>{{$dancer->name2}}</li>
+        @endforeach
     </ul>
     <div class="row">
         <!-- ide mehet mondjuk egy lista.txt és csá -->
@@ -14,7 +15,6 @@
             @csrf
         </form>
     </div>
-    @endforeach
 @endsection
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
