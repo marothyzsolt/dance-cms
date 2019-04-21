@@ -14,12 +14,10 @@ use Illuminate\Http\Request;
 
 trait DancerTrait
 {
-    public final function saveDancer(TypeDancer $dancer,Request $request)
-    {
+    public final function saveDancer(TypeDancer $dancer,Request $request) {
         TypeDancer::updateOrCreate(['id' => $dancer->id],$request->except('_token'));
     }
-    public final function deleteDancer(TypeDancer $dancer)
-    {
+    public final function deleteDancer(TypeDancer $dancer) {
         $dancer->delete();
     }
 }
