@@ -19,16 +19,38 @@
     </div>
 </div>
 
-<div class="row effect-list">
-    @foreach($effects as $effect)
-        <div class="col-md-2">
-            <a class="effect" data-id="{{$effect->page->id}}">
-                <img width="100%" src="{{$effect->thumbnail}}" alt="">
-                <div>{{$effect->name}}</div>
-            </a>
+    <div class="row p-4">
+        <div class="col-md-1">
+            <a data-toggle="collapse" data-parent="" href="#panel_effects" class="btn btn-info btn-sm">Effektek</a>
         </div>
-    @endforeach
-</div>
+        <div class="col-md-1">
+            <a data-toggle="collapse" data-parent="" href="#panel_effects" class="btn btn-info btn-sm">Táncosok</a>
+        </div>
+    </div>
+
+    <div id="panel_effects" class="collapse in show">
+        <div class="row effect-list">
+            @foreach($effects as $effect)
+                <div class="col-md-2">
+                    <a class="effect" data-id="{{$effect->page->id}}">
+                        <img width="100%" src="{{$effect->thumbnail}}" alt="">
+                        <div>{{$effect->name}}</div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div id="panel_dancers" class="collapse in show">
+        <div class="row">
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
 
 </div>
 @endsection
