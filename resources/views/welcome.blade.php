@@ -4,20 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <style>
-            .video {
-                position: fixed;
-                right: 0;
-                bottom: 0;
-                min-width: 100%;
-                min-height: 100%;
-            }
-        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-        <title>Laravel</title>
-
-        <!-- Styles -->
         <style>
+
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -30,56 +20,46 @@
         </style>
     </head>
     <body>
-        <video controls preload class="video" id="video1">
-            <source src="2.mp4" type="video/mp4">
-        </video>
 
-        <video autoplay controls preload class="video" id="video2">
-            <source src="2.mp4" type="video/mp4">
-        </video>
+    <div id="main1">
+        @include('types.effect')
+    </div>
 
+    <div id="main2">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </div>
 
+    <script>
+        var currentMain = "main1";
 
-        <script>
-            /*$('#video1').bind('ended', function(){
-                $("#video1").fadeOut();
+        function getNextMain() {
+            return currentMain == 'main1'?'main2':'main1';
+        }
+        $("#main2").fadeOut(1);
+        $("#main1").fadeIn(1);
 
-                $("#video2").css('display', 'block');
-                $("#video2").fadeIn();
-                document.getElementById('video2').play();
-            });*/
-
-            function getNextVideo(e) {
-                return e.id == 'video1'?'video2':'video1';
-            }
-            var endingOutTime = 4000;
-
-            var currentPlaying = 'video1';
-            var isFading = false;
-
-            $('video').bind('ended', function(){
-                this.currentTime = 0;
+        var updatePage = function() {
+            $.ajax({
+                type: "GET",
+                url: '{{ url('pool') }}',
+                success: function(data) {
+                    $("#"+getNextMain()).html(data.view);
+                    $("#"+getNextMain()).fadeIn(3500);
+                    $("#"+currentMain).fadeOut(5000);
+                    currentMain = getNextMain();
+                },
+                error: function() {
+                    //console.log('Ooops, something happened!');
+                },
+                dataType: 'json',
+                complete: function() {
+                    updatePage();
+                },
             });
+        };
 
-            $('video').on('timeupdate', function(event) {
-                var current = Math.round(event.target.currentTime * 1000);
-                var total = Math.round(event.target.duration * 1000);
-
-                if ( ( total - current ) < endingOutTime && !isFading) {
-                    $(this).fadeOut(4000);
-                    $("#"+getNextVideo(this)).fadeIn(4000);
-                    document.getElementById(getNextVideo(this)).play();
-                    isFading = true;
-                }
-
-                if(this.id != currentPlaying && current > endingOutTime)
-                {
-                    isFading = false;
-                }
-            });
-        </script>
+        updatePage();
+    </script>
     </body>
 </html>
 

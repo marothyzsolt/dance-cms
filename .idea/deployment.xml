@@ -1,33 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="s.mynelli.eu">
+  <component name="PublishConfigData" autoUpload="Always" serverName="mynelli">
     <serverData>
-      <paths name="52.166.221.75 dev chefparade">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="s.mynelli.eu">
+      <paths name="mynelli">
         <serverdata>
           <mappings>
             <mapping deploy="/var/www/dance.mynelli.eu/public_html/dance" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-          <excludedPaths>
-            <excludedPath path="/var/www/dance.mynelli.eu/public_html/dance/vendor" />
-            <excludedPath path="/var/www/dance.mynelli.eu/public_html/dance/tests" />
-            <excludedPath path="/var/www/dance.mynelli.eu/public_html/dance/storage" />
-            <excludedPath local="true" path="$PROJECT_DIR$/vendor" />
-            <excludedPath local="true" path="$PROJECT_DIR$/tests" />
-            <excludedPath local="true" path="$PROJECT_DIR$/storage" />
-          </excludedPaths>
-        </serverdata>
-      </paths>
-      <paths name="topin.io">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

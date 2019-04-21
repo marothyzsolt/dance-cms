@@ -14,6 +14,16 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $page = \Setting::get('page');
+    $page = \App\Page::find($page);
+    return view('welcome', compact('page'));
 });
-Route::get('cms','AdminController@index')->name('admin.index');
+
+Route::prefix('cms')->group(function() {
+    Route::get('/','AdminController@index')->name('cms.index');
+    Route::get('effects','EffectsController@index')->name('cms.effects.index');
+    Route::post('effects/upload','EffectsController@upload')->name('cms.effects.upload');
+
+    Route::post('/selectPage','PageController@select');
+});
+Route::get('pool','PoolController@index')->name('pool.index');
