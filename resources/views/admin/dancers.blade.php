@@ -8,6 +8,7 @@
         <li>{{$dancer->name2}}</li>
     </ul>
     <div class="row">
+        <!-- ide mehet mondjuk egy lista.txt és csá -->
         <form method="post" action="{{route('cms.dancers.upload')}}" enctype="multipart/form-data"
               class="dropzone" id="dropzone">
             @csrf
