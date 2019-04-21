@@ -21,8 +21,15 @@ Route::get('/', function () {
 
 Route::prefix('cms')->group(function() {
     Route::get('/','AdminController@index')->name('cms.index');
+
     Route::get('effects','EffectsController@index')->name('cms.effects.index');
     Route::post('effects/upload','EffectsController@upload')->name('cms.effects.upload');
+
+    Route::get('dancers','DancersController@index')->name('cms.dancers.index');
+    Route::post('dancers/upload','DancersController@upload')->name('cms.dancers.upload');
+    Route::get('edit/dancer/{dancer}','DancersController@edit')->name('cms.dancers.edit');
+    Route::get('delete/dancer/{dancer}','DancersController@delete')->name('cms.dancers.delete');
+    Route::post('save/dancer/{dancer?}','DancersController@save')->name('cms.dancers.save');
 
     Route::post('/selectPage','PageController@select');
 });
