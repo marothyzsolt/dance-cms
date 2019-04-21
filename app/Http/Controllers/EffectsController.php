@@ -37,7 +37,7 @@ class EffectsController extends Controller
         $realPath = $request->file('file')->getRealPath();
 
         $typeEffect = TypeEffect::create(['name' => $fileName]);
-        $page = Page::create(['pageable_id' => $typeEffect->id, 'pageable_type' => 'effect']);
+        $page = Page::create(['pageable_id' => $typeEffect->id, 'pageable_type' => 'App\TypeEffect']);
         $path = storage_path("app/public/effects/".$typeEffect->id."/");
         $img = "{$realPath}.jpg";
 
