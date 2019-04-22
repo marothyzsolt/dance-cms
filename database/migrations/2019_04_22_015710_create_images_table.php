@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTypeDancersTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateTypeDancersTable extends Migration
      */
     public function up()
     {
-        Schema::create('type_dancers', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('dancer1_id');
-            $table->string('dancer2_id');
+            $table->string('name');
+            $table->string('path');
+            $table->integer('image_type_id');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateTypeDancersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('type_dancers');
+        Schema::dropIfExists('images');
     }
 }

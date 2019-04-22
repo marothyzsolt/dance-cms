@@ -20,9 +20,12 @@
         </style>
     </head>
     <body>
-
     <div id="main1">
-        @include('types.effect')
+        @if($pageType == \App\TypeEffect::class)
+            @include('types.effect')
+        @elseif($pageType == \App\TypeDancer::class)
+            @include('types.dancer')
+        @endif
     </div>
 
     <div id="main2">

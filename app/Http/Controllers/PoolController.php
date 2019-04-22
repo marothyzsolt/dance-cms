@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Page;
+use App\TypeDancer;
+use App\TypeEffect;
 use Illuminate\Http\Request;
 
 class PoolController extends Controller
@@ -17,8 +19,10 @@ class PoolController extends Controller
             if($this->hasUpdate())
             {
                 $page = \App\Page::find($this->currentPage);
+                if($page->pageable_type == TypeEffect::class) $view = 'types.effect';
+                if($page->pageable_type == TypeDancer::class) $view = 'types.dancer';
                 return response()->json([
-                    'view' => view('types.effect', compact('page'))->render()
+                    'view' => view($view, compact('page'))->render()
                 ]);
             }
             usleep(1000*1000);

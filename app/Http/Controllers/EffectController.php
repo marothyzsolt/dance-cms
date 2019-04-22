@@ -8,7 +8,7 @@ use App\TypeEffect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class EffectsController extends Controller
+class EffectController extends Controller
 {
     public function index() {
 

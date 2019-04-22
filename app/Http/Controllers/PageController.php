@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Dancer;
 use App\Page;
-use App\Setting;
-use App\TypeEffect;
+use App\TypeDancer;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -16,5 +16,30 @@ class PageController extends Controller
         \Setting::save();
 
         return response()->json($response);
+    }
+
+    public function createDancerPage(Request $request)
+    {
+        $dancer1 = Dancer::find($request->get('id1'));
+        $dancer2 = Dancer::find($request->get('id2'));
+
+        $typeDancer = TypeDancer::create(
+            [
+                'dancer1_id' => $dancer1->id,
+                'dancer2_id' => $dancer2->id,
+            ]
+        );
+
+        $page = Page::createDancer($typeDancer);
+
+        $data = [
+            'page_id' => $page->id,
+            'num1' => $dancer1->num,
+            'name1' => $dancer1->name,
+            'num2' => $dancer2->num,
+            'name2' => $dancer2->name,
+        ];
+
+        return response()->json($data);
     }
 }

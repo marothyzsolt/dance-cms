@@ -75,7 +75,7 @@
             }
         }*/
 
-        console.log(this.id + " " + this.currentTime);
+       // console.log(this.id + " " + this.currentTime);
         if(this.id == currentPlaying) { // current MAIN playing
             if ((total - current) < endingOutTime && !isFading) {
                 isFading = true;

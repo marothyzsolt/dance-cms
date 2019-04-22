@@ -7,7 +7,7 @@
     </div>
 
     <div class="row">
-        <form method="post" action="{{route('cms.dancers.upload')}}" enctype="multipart/form-data"
+        <form method="post" action="{{route('cms.effects.upload')}}" enctype="multipart/form-data"
               class="dropzone" id="dropzone">
             @csrf
         </form>

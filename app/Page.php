@@ -12,4 +12,24 @@ class Page extends Model
     {
         return $this->morphTo();
     }
+
+    public static function createEffect(TypeEffect $typeEffect)
+    {
+        return self::create(
+            [
+                'pageable_id' => $typeEffect->id,
+                'pageable_type' => TypeEffect::class,
+            ]
+        );
+    }
+
+    public static function createDancer(TypeDancer $typeDancer)
+    {
+        return self::create(
+            [
+                'pageable_id' => $typeDancer->id,
+                'pageable_type' => TypeDancer::class,
+            ]
+        );
+    }
 }
