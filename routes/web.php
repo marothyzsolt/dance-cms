@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     $page = \Setting::get('page');
+    $viewType = \Setting::get('viewType');
     $page = \App\Page::find($page);
     $pageType = $page->pageable_type;
-    return view('welcome', compact('page', 'pageType'));
+    return view('welcome', compact('page', 'pageType', 'viewType'));
 });
 
 Route::prefix('cms')->group(function() {

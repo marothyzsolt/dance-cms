@@ -71,12 +71,6 @@
         }
     }
 </style>
-<video autoplay loop preload class="video_dancer" id="video_dancer1">
-    <source src="{{url('video/plexus_.mp4')}}" type="video/mp4">
-</video>
-<video autoplay loop preload class="video_dancer" id="video_dancer2">
-    <source src="{{url('video/plexus_.mp4')}}" type="video/mp4">
-</video>
 
 <div class="dancer_screen" id="content1">
     <div class="num">{{($page->pageable->dancer1->num)}}</div>

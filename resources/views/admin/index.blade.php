@@ -14,12 +14,20 @@
         <div class="golive-random-container">
             <button id="go_live_random_effect" class="btn btn-info btn-raised btn-xs">RANDOM EFFECT LIVE > </button>
         </div>
+        <div class="checks">
+            <select class="custom-select custom-select-sm" name="x{{rand(1,1000000)}}" id="viewType">
+                <option value="0">SIMPLE</option>
+                <option value="1">DOUBLE SIDE</option>
+                <option value="2">DS MIRROR</option>
+            </select>
+        </div>
         <div class="golive-container">
             <button id="go_live" class="btn btn-success btn-raised stopSlideShow">GO LIVE > <br><small id="fadingTime" style="font-size:10px">4000</small> </button>
         </div>
-        <div class="fading-container">
+        <div class="settings-container">
             <input id="fading" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="250" data-slider-value="3500"/>
         </div>
+
     </div>
     <div class="col-md-5 live-container">
         <div class="title"><a href="{{url('/')}}" target="_blank">LIVE</a></div>
@@ -37,6 +45,9 @@
         <div class="col-md-1">
             <button data-toggle="collapse" data-parent="#panel_parent" href="#panel_images" class="btn btn-info btn-sm">Képek</button>
         </div>
+        <div class="col-md-1">
+            <button data-toggle="collapse" data-parent="#panel_parent" href="#panel_schedule" class="btn btn-info btn-sm">Időzítő</button>
+        </div>
     </div>
 
     <div id="panel_parent">
@@ -48,8 +59,12 @@
             @include('admin.panels.dancers')
         </div>
 
-        <div id="panel_images" class="collapse in show" data-parent="#panel_parent">
+        <div id="panel_images" class="collapse in" data-parent="#panel_parent">
             @include('admin.panels.images')
+        </div>
+
+        <div id="panel_schedule" class="collapse in show" data-parent="#panel_parent">
+            @include('admin.panels.schedule')
         </div>
     </div>
 
@@ -69,7 +84,7 @@
         {
             if(fadeIn === undefined) fadeIn = 3500;
             if(fadeOut === undefined) fadeOut = 5000;
-            ajax('{{url('cms/page/select')}}', 'POST', {id: id, fadeInTime: fadeIn, fadeOutTime: fadeOut})
+            ajax('{{url('cms/page/select')}}', 'POST', {id: id, viewType: $("#viewType").val(), fadeInTime: fadeIn, fadeOutTime: fadeOut})
         }
 
 
@@ -189,6 +204,11 @@
 
         #go_live {
             line-height: 13px;
+        }
+
+        .checks {
+            margin-top:10px;
+            text-align: center;
         }
 
     </style>

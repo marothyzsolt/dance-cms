@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 class PoolController extends Controller
 {
     private $currentPage = null;
+    private $viewType = null;
     private $tick = 0;
 
     public function index() {
         $this->currentPage = \Setting::get('page');
+        $this->viewType = \Setting::get('viewType');
         while(true)
         {
             if($this->hasUpdate())
@@ -26,7 +28,8 @@ class PoolController extends Controller
                 return response()->json([
                     'fadeInTime' => $this->loadSetting('fadeInTime')?:2000,
                     'fadeOutTime' => $this->loadSetting('fadeOutTime')?:4000,
-                    'view' => view($view, compact('page'))->render()
+                    'viewType' => $this->viewType,
+                    'view' => view($view, compact('page'))->with('viewType', $this->viewType)->render()
                 ]);
             }
             usleep(0.5*(1000000));
@@ -37,10 +40,13 @@ class PoolController extends Controller
 
     public function hasUpdate()
     {
-        $hasUpdate = $this->currentPage != $this->loadSetting('page');
-        if($hasUpdate)
+        $hasPageUpdate = $this->currentPage != $this->loadSetting('page');
+        $hasViewTypeUpdate = $this->viewType != $this->loadSetting('viewType');
+        if($hasPageUpdate)
             $this->currentPage = \Setting::get('page');
-        return $hasUpdate;
+        if($hasViewTypeUpdate)
+            $this->viewType = \Setting::get('viewType');
+        return $hasPageUpdate || $hasViewTypeUpdate;
     }
 
     private function loadSetting($name)

@@ -8,3 +8,5 @@
         </div>
     @endforeach
 </div>
+
+@include('admin.effects')

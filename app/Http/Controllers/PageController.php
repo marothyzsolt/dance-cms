@@ -14,10 +14,12 @@ class PageController extends Controller
         $page = Page::find($request->get('id'));
         $fadeInTime = $request->get('fadeInTime');
         $fadeOutTime = $request->get('fadeOutTime');
+        $viewType = $request->get('viewType');
 
         \Setting::set('page', $page->id);
         \Setting::set('fadeInTime', $fadeInTime);
         \Setting::set('fadeOutTime', $fadeOutTime);
+        \Setting::set('viewType', $viewType);
         \Setting::save();
 
         return response()->json($response);
