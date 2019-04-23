@@ -15,7 +15,10 @@
             <button id="go_live_random_effect" class="btn btn-info btn-raised btn-xs">RANDOM EFFECT LIVE > </button>
         </div>
         <div class="golive-container">
-            <button id="go_live" class="btn btn-success btn-raised">GO LIVE > </button>
+            <button id="go_live" class="btn btn-success btn-raised stopSlideShow">GO LIVE > <br><small id="fadingTime" style="font-size:10px">4000</small> </button>
+        </div>
+        <div class="fading-container">
+            <input id="fading" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="10000" data-slider-step="250" data-slider-value="3500"/>
         </div>
     </div>
     <div class="col-md-5 live-container">
@@ -31,61 +34,22 @@
         <div class="col-md-1">
             <button data-toggle="collapse" data-parent="#panel_parent" href="#panel_dancers" class="btn btn-info btn-sm">Táncosok</button>
         </div>
+        <div class="col-md-1">
+            <button data-toggle="collapse" data-parent="#panel_parent" href="#panel_images" class="btn btn-info btn-sm">Képek</button>
+        </div>
     </div>
 
     <div id="panel_parent">
-        <div id="panel_effects" class="collapse in " data-parent="#panel_parent">
-            <div class="row effect-list">
-                @foreach($effects as $effect)
-                    <div class="col-md-2">
-                        <a class="effect" data-id="{{$effect->page->id}}">
-                            <img width="100%" src="{{$effect->thumbnail}}" alt="">
-                            <div>{{$effect->name}}</div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
+        <div id="panel_effects" class="collapse in" data-parent="#panel_parent">
+            @include('admin.panels.effects')
         </div>
 
-        <div id="panel_dancers" class="collapse in show" data-parent="#panel_parent">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header"><b>Táncos BAL oldal</b></div>
-                        <div class="card-body">
-                            <select title="Táncos #1" name="dancer_left{{rand(1,1000000)}}" data-live-search="true" class="selectpicker" id="dancer_left">
-                                <option value="0">SELECT</option>
-                                @foreach($categories as $category)
-                                    <optgroup label="{{$category->name}}" data-max-options="2">
-                                        @foreach($category->dancers as $id => $dancer)
-                                            <option value="{{$dancer->id}}">{{$dancer->title}}</option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header"><b>Táncos JOBB oldal</b></div>
-                        <div class="card-body">
-                            <select title="Táncos #2" name="dancer_right{{rand(1,1000000)}}" data-live-search="true" class="selectpicker" id="dancer_right">
-                                @foreach($categories as $category)
-                                    <optgroup label="{{$category->name}}" data-max-options="2">
-                                        @foreach($category->dancers as $dancer)
-                                            <option value="{{$dancer->id}}">{{$dancer->title}}</option>
-                                        @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 p-5">
-                    <button class="btn btn-warning btn-raised dancerMakePreview">PREVIEW</button>
-                </div>
-            </div>
+        <div id="panel_dancers" class="collapse in" data-parent="#panel_parent">
+            @include('admin.panels.dancers')
+        </div>
+
+        <div id="panel_images" class="collapse in show" data-parent="#panel_parent">
+            @include('admin.panels.images')
         </div>
     </div>
 
@@ -98,8 +62,15 @@
             var pageID = $(this).attr('data-id');
             selectedPage = pageID;
             var link = $(this).children('img').attr('src');
-            $('#preview').html('<img id="theImg" src="'+link+'" width="400"/>');
+            $('#preview').html('<img id="theImg" src="'+link+'" width="400" height="240"/>');
         });
+
+        function goLive(id, fadeIn, fadeOut)
+        {
+            if(fadeIn === undefined) fadeIn = 3500;
+            if(fadeOut === undefined) fadeOut = 5000;
+            ajax('{{url('cms/page/select')}}', 'POST', {id: id, fadeInTime: fadeIn, fadeOutTime: fadeOut})
+        }
 
 
         $("#go_live").on('click', function() {
@@ -111,7 +82,11 @@
                 $(e).prop('disabled', false);
             }, 2000);
 
-            ajax('{{url('cms/page/select')}}', 'POST', {id:selectedPage})
+            if(selectedPage !== "IMG_SLIDESHOW") {
+                let fadingTime = parseInt($("#fadingTime").html());
+                if(fadingTime === 0) fadingTime = 1;
+                goLive(selectedPage, fadingTime, parseInt(fadingTime*1.68));
+            }
         });
 
         var effectList = @json($effectList);
@@ -148,6 +123,12 @@
                     selectedPage = data.page_id;
                 }
             })
+        });
+
+        $('#fading').slider({
+            formatter: function(value) {
+                $("#fadingTime").html(value);
+            }
         });
     </script>
 
@@ -195,6 +176,19 @@
         }
         .preview_dancers .num {
             font-size: 17px;
+        }
+
+        .preview-container {
+            padding: 0 100px 0 100px;
+        }
+
+        #preview {
+            border: 1px solid #bdbfb1;
+            height: 240px;
+        }
+
+        #go_live {
+            line-height: 13px;
         }
 
     </style>

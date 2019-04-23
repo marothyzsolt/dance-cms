@@ -23,6 +23,8 @@
     <div id="main1">
         @if($pageType == \App\TypeEffect::class)
             @include('types.effect')
+        @elseif($pageType == \App\TypeImage::class)
+            @include('types.image')
         @elseif($pageType == \App\TypeDancer::class)
             @include('types.dancer')
         @endif
@@ -35,6 +37,9 @@
     <script>
         var currentMain = "main1";
 
+        var fadeInTime = 2000;
+        var fadeOutTime = 4000;
+
         function getNextMain() {
             return currentMain == 'main1'?'main2':'main1';
         }
@@ -46,9 +51,17 @@
                 type: "GET",
                 url: '{{ url('pool') }}',
                 success: function(data) {
+                    if(data.fadeInTime !== undefined)
+                        fadeInTime = data.fadeInTime;
+                    if(data.fadeOutTime !== undefined)
+                        fadeOutTime = data.fadeOutTime;
+
+                    console.log(fadeInTime);
+                    console.log(fadeOutTime);
+
                     $("#"+getNextMain()).html(data.view);
-                    $("#"+getNextMain()).fadeIn(3500);
-                    $("#"+currentMain).fadeOut(5000);
+                    $("#"+getNextMain()).fadeIn(parseInt(data.fadeInTime));
+                    $("#"+currentMain).fadeOut(parseInt(data.fadeOutTime));
                     currentMain = getNextMain();
                 },
                 error: function() {

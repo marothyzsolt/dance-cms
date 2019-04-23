@@ -13,4 +13,14 @@ class Image extends Model
         'path' => 'array'
     ];*/
 
+    public function getUrlAttribute()
+    {
+        return url('storage/images/'.$this->id."/".$this->path);
+    }
+
+    public function typeImage()
+    {
+        return $this->hasOne(TypeImage::class);
+    }
+
 }

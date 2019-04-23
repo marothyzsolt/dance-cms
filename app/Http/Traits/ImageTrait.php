@@ -8,6 +8,8 @@
 
 namespace App\Http\Traits;
 
+use App\Page;
+use App\TypeImage;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ImageSaveRequest;
 use App\Image;
@@ -20,6 +22,8 @@ trait ImageTrait
         $datas['path'] = $this->getFileName($request);
         //dd($this->getFileName($request));
         $imageCreate = Image::updateOrCreate(['id' => $image->id], $datas);
+        $typeImage = TypeImage::create(['image_id' => $imageCreate->id]);
+        Page::create(['pageable_id' => $typeImage->id, 'pageable_type' => TypeImage::class]);
         $this->moveImage($imageCreate,$request);
     }
     public final function deleteImage(Image $image) {

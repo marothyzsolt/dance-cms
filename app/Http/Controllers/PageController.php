@@ -12,7 +12,12 @@ class PageController extends Controller
     public function select(Request $request) {
         $response = "1";
         $page = Page::find($request->get('id'));
+        $fadeInTime = $request->get('fadeInTime');
+        $fadeOutTime = $request->get('fadeOutTime');
+
         \Setting::set('page', $page->id);
+        \Setting::set('fadeInTime', $fadeInTime);
+        \Setting::set('fadeOutTime', $fadeOutTime);
         \Setting::save();
 
         return response()->json($response);
