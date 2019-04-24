@@ -25,6 +25,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
 
+    <script>
+        function bake_cookie(name, value) {
+            var cookie = [name, '=', JSON.stringify(value), '; domain=.', window.location.host.toString(), '; path=/;'].join('');
+            document.cookie = cookie;
+        }
+        function read_cookie(name) {
+            var result = document.cookie.match(new RegExp(name + '=([^;]+)'));
+            result && (result = JSON.parse(result[1]));
+            return result;
+        }
+        function delete_cookie(name) {
+            document.cookie = [name, '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.', window.location.host.toString()].join('');
+        }
+    </script>
     <style>
         .filter-option-inner-inner {
             color: black;
@@ -72,6 +86,22 @@
             font-size  : .670rem;
             line-height  : 1.1;
             border-radius : .2rem;
+        }
+
+        .btn-fab {
+            width: 0.5rem !important;
+            min-width: 1.5rem !important;
+            height: 1.5rem !important;
+            border-radius: 10% !important;
+            box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.26) !important;
+            padding: 0 !important;
+            line-height: 0 !important;
+            font-size: 1.2rem !important;
+            overflow: hidden !important;
+        }
+
+        .btn-fab i.material-icons {
+            font-size: 19px;
         }
     </style>
 </head>

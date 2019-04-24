@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dancer;
 use App\DancerCategory;
 use App\ImageType;
 use App\Page;
@@ -13,7 +14,8 @@ class AdminController extends Controller
         $effects = TypeEffect::all();
         $imageTypes = ImageType::all();
         $categories = DancerCategory::all();
+        $dancers = Dancer::all();
         $effectList = Page::where('pageable_type', TypeEffect::class)->get('id')->pluck('id');
-        return view('admin.index', compact('effects', 'categories', 'effectList', 'imageTypes'));
+        return view('admin.index', compact('effects', 'categories', 'effectList', 'imageTypes', 'dancers'));
     }
 }

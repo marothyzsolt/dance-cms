@@ -72,6 +72,13 @@
 @endsection
 @section('script')
     <script>
+        var dancers = @json($dancers);
+
+        var dancerQueue = read_cookie('queue');
+        if (!dancerQueue) {
+            dancerQueue = [];
+        }
+
         var selectedPage = null;
         $(".effect").click(function() {
             var pageID = $(this).attr('data-id');
@@ -107,9 +114,14 @@
         var effectList = @json($effectList);
 
         $("#go_live_random_effect").on('click', function() {
-            var randomEffectPageId = effectList[Math.floor(Math.random()*effectList.length)];
-            ajax('{{url('cms/page/select')}}', 'POST', {id:randomEffectPageId})
+            randomEffect();
         });
+
+        function randomEffect()
+        {
+            var randomEffectPageId = effectList[Math.floor(Math.random()*effectList.length)];
+            ajax('{{url('cms/page/select')}}', 'POST', {id:randomEffectPageId});
+        }
 
         $(".dancerMakePreview").on('click', function() {
             let dancer1 = $("#dancer_left").val();
@@ -134,7 +146,6 @@
                             "</div>" +
                         "</div>";
                     $("#preview").html(html);
-                    console.log(data);
                     selectedPage = data.page_id;
                 }
             })
